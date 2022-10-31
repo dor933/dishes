@@ -34,7 +34,7 @@ class ingredient {
     }
     
     render() {
-        return `<div class="col-4 dishmaindiv">  <label class="checkbox-inline"> <input id=${this.id} type="checkbox" value="">Add</label>
+        return `<div class="col-12 col-lg-4 dishmaindiv">  <label class="checkbox-inline"> <input id=${this.id} type="checkbox" value="">Add</label>
          <p class="dishespar"> ingerdient details: </p> <p class="dishespar"> <img src=${this.imageurl}> </p> <p class="dishespar"> dish name: ${this.name} </p> <p class="dishespar"> calories: ${this.calories} </p>  </div>`
     }
 
