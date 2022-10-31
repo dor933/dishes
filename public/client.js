@@ -39,8 +39,8 @@ class ingredient {
     }
 
     rendertopopup() {
-        return `<div class="col-4 dishmaindiv"> 
-         <p class="dishespar"> ingerdient details: </p> <p class="dishespar"> <img src=${this.imageurl}> </p> <p class="dishespar"> dish name: ${this.name} </p> <p class="dishespar"> calories: ${this.calories} </p>  </div>`
+        return `<div class="divtorender">
+         <p class="dishespar"> ingerdient details: </p> <p class="dishespar"> <img src=${this.imageurl}> </p> <p class="dishespar"> dish name: ${this.name} </p> <p class="dishespar"> calories: ${this.calories} </p> </div>  `
     }
 }
 
@@ -64,7 +64,7 @@ class Dishrecipe {
     }
 
     render() {
-        return `<div id=${this.id} class="col-12 col-lg-2 dishmaindiv"> <p class="dishespar"> Dish recipe details: </p> <p class="dishespar"> <img src=${this.imageurl}> </p> <p class="dishespar"> dish name: ${this.name} </p> <p class="dishespar"> cooking method:blabla </p> <p class="dishespar"> Total cooking time:${this.time} </p> <p class="dishespar"> total calories:${this.calories} </p> <p class="dishespar"> <button type="button" class="btn btn-primary" onclick="showpopup(${this.id})"> Show ingredients </button> </p> </div>`
+        return `<div id=${this.id} class="col-12 col-lg-2 dishmaindiv"> <p class="dishespar"> Dish recipe details: </p> <p class="dishespar"> <img src=${this.imageurl}> </p> <p class="dishespar"> dish name: ${this.name} </p> <p class="dishespar"> cooking method:blabla </p> <p class="dishespar"> Total cooking time:${this.time} </p> <p class="dishespar"> total calories:${this.calories} </p> <p class="dishespar"> <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="showpopup(${this.id})"> Show ingredients </button> </p> </div>`
     }
 
     
@@ -180,10 +180,8 @@ function addnewdish(name,ingerdarray,cookingmethod,cookingtime,calor,dishimg) {
 
 function showpopup(dishid) {
 
-    const modal=document.getElementById("myModal");
     const innermodal=document.getElementById("modalinner");
     innermodal.innerHTML="";
-    modal.style.display="block";
     const relevantdish=disharray.find(x=> x.id==dishid)
 
     for(let i=0; i<relevantdish.ingredients.length; i++){
