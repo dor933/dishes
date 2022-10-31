@@ -64,7 +64,7 @@ class Dishrecipe {
     }
 
     render() {
-        return `<div id=${this.id} class="col-2 dishmaindiv"> <p class="dishespar"> Dish recipe details: </p> <p class="dishespar"> <img src=${this.imageurl}> </p> <p class="dishespar"> dish name: ${this.name} </p> <p class="dishespar"> cooking method:blabla </p> <p class="dishespar"> Total cooking time:${this.time} </p> <p class="dishespar"> total calories:${this.calories} </p> <p class="dishespar"> <button type="button" class="btn btn-primary" onclick="showpopup(${this.id})"> Show ingredients </button> </p> </div>`
+        return `<div id=${this.id} class="col-12 col-lg-2 dishmaindiv"> <p class="dishespar"> Dish recipe details: </p> <p class="dishespar"> <img src=${this.imageurl}> </p> <p class="dishespar"> dish name: ${this.name} </p> <p class="dishespar"> cooking method:blabla </p> <p class="dishespar"> Total cooking time:${this.time} </p> <p class="dishespar"> total calories:${this.calories} </p> <p class="dishespar"> <button type="button" class="btn btn-primary" onclick="showpopup(${this.id})"> Show ingredients </button> </p> </div>`
     }
 
     
