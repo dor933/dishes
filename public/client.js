@@ -34,7 +34,7 @@ class ingredient {
     }
     
     render() {
-        return `<div class="col-12 col-lg-4 dishmaindiv">  <label class="checkbox-inline"> <input id=${this.id} type="checkbox" value="">Add</label>
+        return `<div class="col-12 col-lg-2 dishmaindiv">  <label class="checkbox-inline"> <input id=${this.id} type="checkbox" value="">Add</label>
          <p class="dishespar"> ingerdient details: </p> <p class="dishespar"> <img src=${this.imageurl}> </p> <p class="dishespar"> dish name: ${this.name} </p> <p class="dishespar"> calories: ${this.calories} </p>  </div>`
     }
 
@@ -73,7 +73,7 @@ class Dishrecipe {
 }
 
 function myinit(){
-fetch('http://localhost:3000/init').then((response) =>  {
+fetch('/init').then((response) =>  {
     response.json().then((data)=> {
          renderpage(data)
     })
@@ -162,7 +162,7 @@ $(document).ready(function() {
 function addnewdish(name,ingerdarray,cookingmethod,cookingtime,calor,dishimg) {
 
     const dishtoadd=new Dishrecipe(++dishescounter,name,ingerdarray,cookingtime,cookingmethod,dishimg,calor);
-    fetch('http://localhost:3000/adddish', {
+    fetch('/adddish', {
         method:'post',
         headers: {
             "Content-Type": "application/json"
@@ -208,7 +208,7 @@ function addingredient(name,imageurl,calories) {
     console.log(newingeredient)
 
     
-    fetch('http://localhost:3000/addingerdient', {
+    fetch('/addingerdient', {
         method:'post',
         headers: {
             "Content-Type": "application/json"
