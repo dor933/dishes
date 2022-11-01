@@ -35,7 +35,7 @@ class ingredient {
     
     render() {
         return `<div class="col-12 col-lg-2 dishmaindiv">  <label class="checkbox-inline"> <input id=${this.id} type="checkbox" value="">Add</label>
-         <p class="dishespar"> ingerdient details: </p> <p class="dishespar"> <img src=${this.imageurl}> </p> <p class="dishespar"> dish name: ${this.name} </p> <p class="dishespar"> calories: ${this.calories} </p>  </div>`
+         <p class="dishespar"> ingredient details: </p> <p class="dishespar"> <img src=${this.imageurl}> </p> <p class="dishespar"> dish name: ${this.name} </p> <p class="dishespar"> calories: ${this.calories} </p>  </div>`
     }
 
     rendertopopup() {
@@ -64,7 +64,7 @@ class Dishrecipe {
     }
 
     render() {
-        return `<div id=${this.id} class="col-12 col-lg-2 dishmaindiv"> <p class="dishespar"> Dish recipe details: </p> <p class="dishespar"> <img src=${this.imageurl}> </p> <p class="dishespar"> dish name: ${this.name} </p> <p class="dishespar"> cooking method:blabla </p> <p class="dishespar"> Total cooking time:${this.time} </p> <p class="dishespar"> total calories:${this.calories} </p> <p class="dishespar"> <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="showpopup(${this.id})"> Show ingredients </button> </p> </div>`
+        return `<div id=${this.id} class="col-12 col-lg-2 dishmaindiv"> <p class="dishespar">  Recipe details: </p> <p class="dishespar"> <img src=${this.imageurl}> </p> <p class="dishespar"> Recipe name: ${this.name} </p> <p class="dishespar"> cooking method:blabla </p> <p class="dishespar"> Total cooking time:${this.time} </p> <p class="dishespar"> Total calories:${this.calories} </p> <p class="dishespar"> <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="showpopup(${this.id})"> Show ingredients </button> </p> </div>`
     }
 
     
