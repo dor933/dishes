@@ -1,8 +1,9 @@
 
-let counter=4;
-let dishescounter=1;
+let dishescounter=0;
 const disharray=[];
 const ingredientarray=[]
+let ingerdientcounter=0;
+
 
 
     $("#addrecbtn").hover(function() {           
@@ -30,7 +31,7 @@ class ingredient {
         this.id=id1;
         this.name=name1;
         this.imageurl=imageurl1;
-        this.calories=calories1;
+        this.calories=+calories1;
     }
     
     render() {
@@ -53,20 +54,47 @@ class Dishrecipe {
     imageurl;
     calories;
 
-    constructor(id,name1,myingredients,time1,cookingmethod1,imageurl1,calories1){
+    constructor(id,name1,myingredients,time1,cookingmethod1,imageurl1){
         this.id=id;
         this.name=name1;
         this.ingredients=myingredients;
         this.time=time1;
         this.cookingmetohd=cookingmethod1;
         this.imageurl=imageurl1;
-        this.calories=calories1;
+        this.getTotalcalories(this.ingredients);
     }
 
     render() {
         return `<div id=${this.id} class="col-12 col-lg-2 dishmaindiv"> <p class="dishespar">  Recipe details: </p> <p class="dishespar"> <img src=${this.imageurl}> </p> <p class="dishespar"> Recipe name: ${this.name} </p> <p class="dishespar"> cooking method:blabla </p> <p class="dishespar"> Total cooking time:${this.time} </p> <p class="dishespar"> Total calories:${this.calories} </p> <p class="dishespar"> <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="showpopup(${this.id})"> Show ingredients </button> </p> </div>`
     }
 
+    showeingerdients(){
+        const dishingerdients=[];
+
+        for(let i=0; i<this.ingredients.length; i++){
+
+
+            const ingerdrelevant=ingredientarray.find(x=>x.id==this.ingredients[i].id)
+           dishingerdients.push(ingerdrelevant);
+    
+        }
+
+        return dishingerdients;
+
+    }
+
+    getTotalcalories(arrayofcalories){
+        this.calories=0;
+
+        for(let i=0; i<arrayofcalories.length; i++){
+
+
+           this.calories+=arrayofcalories[i].calories
+    
+        }
+
+
+    }
     
 
 
@@ -75,6 +103,8 @@ class Dishrecipe {
 function myinit(){
 fetch('/init').then((response) =>  {
     response.json().then((data)=> {
+        ingerdientcounter=data.numinger;
+         dishescounter=data.numdishes;
          renderpage(data)
     })
 })
@@ -141,8 +171,7 @@ $(document).ready(function() {
                 const dishingerarray=[];
                 const mydishname=document.getElementById("dishname").value;
                 const dishcookmet=document.getElementById("dishcookingmethod").value;
-                const dishcal=document.getElementById("dishcal").value;
-                const dishcookingtime=document.getElementById("dishcal").value;
+                const dishcookingtime=document.getElementById("dishtime").value;
                 const dishimgurl=document.getElementById("dishimg").value;
                 console.log(checkboxinger)
 
@@ -154,14 +183,14 @@ $(document).ready(function() {
                     }
                 }
 
-                addnewdish(mydishname,dishingerarray,dishcookmet,dishcookingtime,dishcal,dishimgurl);
+                addnewdish(mydishname,dishingerarray,dishcookmet,dishcookingtime,dishimgurl);
             })
         })
 
 
-function addnewdish(name,ingerdarray,cookingmethod,cookingtime,calor,dishimg) {
+function addnewdish(name,ingerdarray,cookingmethod,cookingtime,dishimg) {
 
-    const dishtoadd=new Dishrecipe(++dishescounter,name,ingerdarray,cookingtime,cookingmethod,dishimg,calor);
+    const dishtoadd=new Dishrecipe(++dishescounter,name,ingerdarray,cookingtime,cookingmethod,dishimg);
     fetch('/adddish', {
         method:'post',
         headers: {
@@ -169,6 +198,7 @@ function addnewdish(name,ingerdarray,cookingmethod,cookingtime,calor,dishimg) {
           },
         body:JSON.stringify(dishtoadd)}).then((response) => {
             response.json().then((data)=> {
+                   dishescounter=data.numdishes
                    ingredientarray=data.ingerdient
                    disharray=data.dishes
                    renderpage();
@@ -183,12 +213,13 @@ function showpopup(dishid) {
     const innermodal=document.getElementById("modalinner");
     innermodal.innerHTML="";
     const relevantdish=disharray.find(x=> x.id==dishid)
+    const ingerdientstorender=relevantdish.showeingerdients();
+    
 
-    for(let i=0; i<relevantdish.ingredients.length; i++){
+    for(let i=0; i<ingerdientstorender.length; i++){
 
 
-        const ingerdrelevant=ingredientarray.find(x=>x.id==relevantdish.ingredients[i].id)
-       innermodal.innerHTML+=ingerdrelevant.rendertopopup()
+       innermodal.innerHTML+=ingerdientstorender[i].rendertopopup()
 
     }
 }
@@ -204,8 +235,7 @@ function closepopup(){
 
 function addingredient(name,imageurl,calories) {
 
-    const newingeredient=new ingredient(++counter,name,imageurl,calories)
-    console.log(newingeredient)
+    const newingeredient=new ingredient(++ingerdientcounter,name,imageurl,calories)
 
     
     fetch('/addingerdient', {
@@ -215,6 +245,7 @@ function addingredient(name,imageurl,calories) {
           },
         body:JSON.stringify(newingeredient)}).then((response) => {
             response.json().then((data)=> {
+                ingerdientcounter=data.numofingerdient
                    ingredientarray=data.ingerdient
                    disharray=data.dishes
                    renderpage();

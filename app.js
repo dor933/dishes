@@ -4,6 +4,8 @@ const PORT=process.env.PORT
 const path=require('path');
 app.use(express.static(__dirname));
 app.use(express.json());
+let ingerdientnumber=4;
+let dishesnumber=1;
 
 
 
@@ -47,8 +49,7 @@ const Dishes= [
         ingredients:[ingredientJson[0],ingredientJson[2],ingredientJson[3]],
         time:20,
         cookingmethod:"blabla",
-        imageurl:"https://d3o5sihylz93ps.cloudfront.net/wp-content/uploads/2020/05/13165500/IMG_0006-1.jpg",
-        calories:209
+        imageurl:"https://d3o5sihylz93ps.cloudfront.net/wp-content/uploads/2020/05/13165500/IMG_0006-1.jpg"
     }
 ]
 
@@ -60,6 +61,8 @@ app.get('/init',(req,res) => {
     res.send({
         ingredients:ingredientJson,
         dishes:Dishes,
+        numinger:ingerdientnumber,
+        numdishes:dishesnumber
         
     })
 })
@@ -81,15 +84,17 @@ app.post('/adddish',(req,res) => {
             ingredients:dishingerconverted,
             time:dish.time,
             cookingmethod:dish.cookingmethod,
-            imageurl:dish.imageurl,
-            calories:dish.calories
+            imageurl:dish.imageurl
+           
 
 
-        })
+        }) 
+        dishesnumber++;
 
         res.status(200).send({
+            numdishes:dishesnumber,
             ingerdient:ingredientJson,
-        dishes:Dishes
+            dishes:Dishes
         })
     } catch(e) {
         res.status(500).send();
@@ -109,9 +114,13 @@ app.post('/addingerdient',(req,res) => {
 
     })
 
+    ingerdientnumber++;
+
+
     res.status(200).send({
         ingerdient:ingredientJson,
-        dishes:Dishes
+        dishes:Dishes,
+        numofingerdient:ingerdientnumber
     });
 }
 catch(e) {
